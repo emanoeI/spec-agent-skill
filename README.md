@@ -95,6 +95,8 @@ npm run pack:check
 npm run distribution:test
 ```
 
+Code style favors clear names, small functions, and comments only where they explain a non-obvious reason or constraint. Public checks reject generated-content and authorship markers.
+
 ## Documentation
 
 - [npm installation and publishing](./docs/npm.md)

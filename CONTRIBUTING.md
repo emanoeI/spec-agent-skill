@@ -38,6 +38,16 @@ Run `npm run public:check` after changing public documentation, prompts, or skil
 - Use technical examples that can be executed or verified.
 - Keep agent dialects correct: Codex uses `$spec`; Claude Code and Cursor use `/spec`.
 
+## Code style
+
+Write code as if it will be maintained by the next person on the project.
+
+- Prefer small functions, direct control flow, and names that explain intent.
+- Keep comments rare. Use them for a non-obvious reason, tradeoff, or constraint; do not narrate what the code already says.
+- Do not add AI-generated disclaimers, model references, filler prose, or comments that claim authorship.
+- Match the surrounding style before introducing a new abstraction or dependency.
+- When changing behavior, add a focused test and keep the public output concise.
+
 ## Pull requests
 
 Before opening a pull request:
@@ -47,4 +57,3 @@ Before opening a pull request:
 - Do not commit generated tarballs, local artifacts, secrets, or private project data.
 - Explain any change to installed files or agent behavior.
 - Run `npm run test:all` and include the result.
-
