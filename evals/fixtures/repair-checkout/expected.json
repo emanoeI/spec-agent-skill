@@ -1,8 +1,8 @@
 {
   "workType": "Repair",
-  "verdict": "proceed",
+  "verdict": "narrow scope",
   "requiredSections": ["verdict", "work type", "impact", "tests", "rollback"],
   "requiredSignals": ["expected behavior", "smallest safe change", "regression"],
   "forbiddenSignals": ["unrelated cleanup", "rewrite checkout"],
-  "shouldCreateTaskPack": false
+  "shouldCreateTaskPack": true
 }

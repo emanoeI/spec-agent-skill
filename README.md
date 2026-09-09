@@ -91,12 +91,15 @@ Useful individual checks:
 npm test
 npm run public:check
 npm run eval
+npm run eval:agent -- repair-checkout
 npm run pack:check
 npm run skill:pack
 npm run distribution:test
 ```
 
 `npm run skill:pack` creates a standalone skill bundle in `dist/spec/`, with `SKILL.md` at its root and no repository-only files.
+
+`npm run eval:agent -- <fixture>` runs one fixture through the installed Codex CLI in an isolated temporary workspace. It requires a working Codex login and is intentionally kept outside the default CI suite; the deterministic output evaluator remains part of `test:all`.
 
 Code style favors clear names, small functions, and comments only where they explain a non-obvious reason or constraint. Public checks reject generated-content and authorship markers.
 
