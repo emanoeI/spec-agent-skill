@@ -24,6 +24,7 @@
     "prompt-compiler",
     "red-flags",
     "regression-guard",
+    "request-depth",
     "risks",
     "security",
     "spec-score",
@@ -48,17 +49,20 @@
     "Repair"
   ],
   "outputSections": [
+    "Lightweight Output",
     "Veredito",
     "Tipo de trabalho",
+    "Impacto no projeto",
+    "Testes mínimos",
+    "Próximo passo",
+    "Standard And Guarded Output",
     "Pesquisa rápida de domínio",
     "Falhas/riscos",
     "Foundation Score",
-    "Impacto no projeto",
     "Base recomendada",
     "Escopo para vibecoding",
     "Regras essenciais",
     "Prompt gerado",
-    "Testes mínimos",
     "Rollback / não regressão",
     "Atualizar memória",
     "Style"
@@ -74,12 +78,14 @@
     "refactor-rewrite-stack",
     "repair-checkout",
     "schema-migration",
+    "small-copy-change",
     "small-internal-tool",
     "upload-feature"
   ],
   "fixtures": [
     "feature-public-listing",
     "greenfield-ecommerce",
+    "lightweight-copy-change",
     "refactor-account",
     "repair-checkout",
     "sensitive-payment"

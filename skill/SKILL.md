@@ -16,25 +16,9 @@ Scale the depth to the request. Use the full pipeline for features, refactors, r
 Spec is invoked inside coding agents, not as a shell command.
 The terminal is only for installation, diagnostics and CI checks.
 
-Before answering any `$spec`, `/spec` or plain Spec request, always inspect the `.spec/` directory.
+Before answering any `$spec`, `/spec` or plain Spec request, inspect `.spec/CONTEXT.md`, `.spec/PRODUCT.md` and `.spec/RULES.md` when they exist. Read the remaining context files only when the request touches their subject. Use [`modules/request-depth.md`](./modules/request-depth.md) to choose `lightweight`, `standard` or `guarded` before loading other modules.
 
-Read these files in order when they exist:
-1. `.spec/CONTEXT.md`
-2. `.spec/PRODUCT.md`
-3. `.spec/RULES.md`
-4. `.spec/ARCHITECTURE.md`
-5. `.spec/DESIGN.md`
-6. `.spec/DECISIONS.md`
-7. `.spec/GLOSSARY.md`
-8. `.spec/RISKS.md`
-9. `.spec/TESTING.md`
-10. `.spec/OPERATIONS.md`
-11. `.spec/PERMISSIONS.md`
-12. `.spec/DATA-MODEL.md`
-13. `.spec/RED-FLAGS.md`
-14. Relevant files inside `.spec/sessions/`
-
-No final implementation prompt without:
+When producing a full implementation prompt, do not finish without:
 - reading `.spec/`
 - domain research
 - work classification
@@ -57,7 +41,7 @@ If `.spec/` does not exist, tell the user to run `npx spec-skill install --all` 
 If `.spec/` exists but project context is empty, run the agent-side `init` flow before producing implementation prompts.
 
 Never generate a final implementation prompt without checking the Spec context first.
-Never skip red flags, project impact, non-regression or memory update for relevant `/spec` requests.
+For standard and guarded requests, never skip relevant red flags, project impact, non-regression or memory updates. For lightweight requests, cover only the focused impact and non-regression checks needed by the change.
 
 ## Commands
 
@@ -117,7 +101,7 @@ Treat Spec as this internal engine:
 
 ## Mandatory Passes
 
-For every relevant `/spec` request:
+For standard and guarded `/spec` requests, run the applicable passes below. Lightweight requests use only request depth, work classification, focused protection, acceptance criteria and tests.
 
 0. Vibecoding Fit
 Spec should optimize scope, stack, phases and prompt shape for coding agents and novice vibecoders.
@@ -134,7 +118,7 @@ Spec should use `.spec/PRODUCT.md` and the rest of `.spec/` to find missing flow
 Spec should protect the project from dangerous requests, regressions, unjustified rewrites, unsafe integrations and weak rollback planning.
 
 4. Prompt Pass
-Only after the passes above should Spec compile the final implementation prompt into `.spec/prompts/YYYY-MM-DD-short-request.md`.
+For standard and guarded work, only after the applicable passes above should Spec compile the final implementation prompt into `.spec/prompts/YYYY-MM-DD-short-request.md`.
 Do not paste the full prompt body in chat when file editing is available.
 
 5. Score Pass
@@ -158,7 +142,7 @@ When a request is larger than one safe change, Spec should create ordered task f
 The chat answer should point to the prompt and task directory instead of carrying the whole plan.
 
 The user should not need to trigger these layers manually.
-The pipeline is mandatory and automatic for every relevant `/spec` request.
+The selected pipeline is automatic. Do not force standard or guarded artifacts onto a lightweight request.
 
 ## Public Flow
 
@@ -179,6 +163,7 @@ Use short bullets.
 Do not write a long essay.
 Do not add motivational filler.
 Do not dump the full implementation prompt in chat.
-Create a prompt file in `.spec/prompts/` and point the agent to it.
+Lightweight requests are chat-only. Do not create prompt, task, session or memory artifacts unless the request is escalated first.
+For standard and guarded requests, create a prompt file in `.spec/prompts/` when it materially improves implementation and point the agent to it.
 
 Use the output contract in [`output-contract.md`](./output-contract.md).

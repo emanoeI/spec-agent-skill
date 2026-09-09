@@ -1,6 +1,6 @@
 # Work Classifier
 
-Classify every `/spec` request before writing the final prompt.
+Classify every `/spec` request before producing the answer or final prompt.
 This is the Decision Engine entrypoint.
 
 ## Allowed Types
@@ -9,10 +9,10 @@ This is the Decision Engine entrypoint.
 Project new. No existing base to preserve.
 
 2. `Feature`
-New capability inside an existing product.
+New capability or intentional user-visible change inside an existing product. Local copy, layout and interaction changes belong here even when they are lightweight.
 
 3. `Refactor`
-Change in something that already works.
+Internal structural change that preserves observable behavior. Moving code, simplifying boundaries or replacing an implementation without changing the user experience belongs here.
 
 4. `Sensitive integration`
 OAuth, payments, uploads, email, permissions, authentication, finance or sensitive data.
@@ -123,5 +123,6 @@ Prompt behavior:
 
 - Always state one work type.
 - If more than one applies, choose the dominant type and mention the secondary risk inside `Falhas/riscos`.
+- Do not label a change as `Refactor` merely because it edits existing code. Use `Refactor` only when internal structure is the purpose and observable behavior stays the same.
 - The work type must change the final prompt, tests and rollback guidance.
 - If the work type is `Refactor`, `Sensitive integration` or `Repair`, the answer must become more conservative.

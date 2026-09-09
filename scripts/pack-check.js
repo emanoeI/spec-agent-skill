@@ -103,6 +103,9 @@ assert(outputContract.includes(".spec/prompts/"), "output-contract.md must menti
 assert(!outputContract.includes("## Prompt melhorado"), "output-contract.md should not inline a full improved prompt.");
 assert(router.includes("## Routing Contract"), "router.md is missing the routing contract.");
 assert(router.includes("### Always Load"), "router.md is missing the always-load module set.");
+assert(router.includes("### Load By Depth"), "router.md is missing depth-based routing.");
+assert(router.includes("modules/request-depth.md"), "router.md must always load request-depth.");
+assert(outputContract.includes("## Lightweight Output"), "output-contract.md must define a lightweight response.");
 assert(router.includes("### Load By Work Type"), "router.md is missing work-type routing.");
 assert(router.includes("### Escalation Signals"), "router.md is missing escalation routing.");
 assert(router.includes("modules/vibecoding-fit.md"), "router.md must always load vibecoding-fit.");
@@ -135,8 +138,8 @@ assert(openaiYaml.includes('short_description: "'), "openai.yaml is missing shor
 assert(openaiYaml.includes("default_prompt:"), "openai.yaml is missing default_prompt.");
 assert(openaiYaml.includes("$spec"), "openai.yaml default_prompt must mention $spec.");
 assert(openaiYaml.includes("allow_implicit_invocation: true"), "openai.yaml should allow implicit invocation.");
-assert(skill.includes(".spec/prompts/"), "SKILL.md must require prompt files in .spec/prompts/.");
-assert(router.includes(".spec/prompts/"), "router.md must route prompt generation to .spec/prompts/.");
+assert(skill.includes(".spec/prompts/"), "SKILL.md must route durable prompts to .spec/prompts/.");
+assert(router.includes(".spec/prompts/"), "router.md must route durable prompts to .spec/prompts/.");
 assert(initCommand.includes("Ask one question at a time"), "init command must ask one question at a time.");
 assert(initCommand.includes("Never dump all onboarding questions at once"), "init command must ban dumping all onboarding questions.");
 assert(initCommand.includes("Mark exactly one option with `(Recomendado)`"), "init command must mark exactly one recommended option.");

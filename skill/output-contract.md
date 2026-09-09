@@ -3,6 +3,36 @@
 Every Spec answer must follow this structure.
 This contract keeps the Decision Engine and Protection Layer visible without pasting a full implementation prompt in chat.
 
+## Lightweight Output
+
+For a `lightweight` request, use only:
+
+```md
+## Veredito
+
+<One-sentence viability call.>
+
+## Tipo de trabalho
+
+<Work type> · lightweight
+
+## Impacto no projeto
+
+- <What changes and what stays stable.>
+
+## Testes mínimos
+
+- <One or two focused checks.>
+
+## Próximo passo
+
+- <Direct implementation instruction.>
+```
+
+Do not add scores, domain research, memory updates, prompt files or task packs to this shape unless the request escalates.
+
+## Standard And Guarded Output
+
 Before writing the answer, resolve `<spec-command>` using the active agent dialect:
 
 - Codex: `$spec`

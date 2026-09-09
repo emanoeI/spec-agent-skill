@@ -72,7 +72,7 @@ Size the response before running the passes:
 
 ## Routing Contract
 
-Run every pass, but load modules deliberately.
+Run every pass required by the selected request depth, and load modules deliberately.
 Do not treat the modules folder as a pile of optional notes.
 Do not read every module by habit when a smaller routed set is enough.
 
@@ -80,17 +80,36 @@ Do not read every module by habit when a smaller routed set is enough.
 
 Every `/spec` request must load these modules:
 
+- [`modules/request-depth.md`](./modules/request-depth.md)
 - [`modules/work-classifier.md`](./modules/work-classifier.md)
+- [`modules/acceptance-criteria.md`](./modules/acceptance-criteria.md)
+
+### Load By Depth
+
+Lightweight:
+
+- [`modules/project-protection.md`](./modules/project-protection.md)
+- [`modules/testing.md`](./modules/testing.md)
+
+Standard:
+
 - [`modules/vibecoding-fit.md`](./modules/vibecoding-fit.md)
 - [`modules/domain-research.md`](./modules/domain-research.md)
-- [`modules/foundation-score.md`](./modules/foundation-score.md)
+- [`modules/project-protection.md`](./modules/project-protection.md)
 - [`modules/mvp-slicer.md`](./modules/mvp-slicer.md)
+- [`modules/prompt-compiler.md`](./modules/prompt-compiler.md)
+- [`modules/memory-loop.md`](./modules/memory-loop.md)
+
+Guarded:
+
+- Load the Standard set.
+- [`modules/foundation-score.md`](./modules/foundation-score.md)
 - [`modules/spec-score.md`](./modules/spec-score.md)
 - [`modules/decision-ledger.md`](./modules/decision-ledger.md)
-- [`modules/prompt-compiler.md`](./modules/prompt-compiler.md)
 - [`modules/agent-task-pack.md`](./modules/agent-task-pack.md)
-- [`modules/memory-loop.md`](./modules/memory-loop.md)
-- [`modules/acceptance-criteria.md`](./modules/acceptance-criteria.md)
+- [`modules/regression-guard.md`](./modules/regression-guard.md)
+- [`modules/risks.md`](./modules/risks.md)
+- [`modules/red-flags.md`](./modules/red-flags.md)
 
 ### Load By Work Type
 
@@ -250,26 +269,26 @@ Goal:
 
 ## Default Flow
 
-1. Load context by reading `.spec/` in the required order.
+1. Load the minimum relevant context from `.spec/`.
 2. Understand the user request and stop for onboarding if `.spec/` is missing.
-3. Classify the work using [`modules/work-classifier.md`](./modules/work-classifier.md).
-4. Run domain research using [`modules/domain-research.md`](./modules/domain-research.md).
-5. Build the routed module set from `Always Load`, `Load By Work Type` and `Escalation Signals`.
-6. Run Foundation, Product Gap and Protection passes using only the routed modules.
-7. Use [`modules/acceptance-criteria.md`](./modules/acceptance-criteria.md) for objective delivery checks.
-8. Assess foundation readiness using [`modules/foundation-score.md`](./modules/foundation-score.md).
-9. Slice the work using [`modules/mvp-slicer.md`](./modules/mvp-slicer.md).
-10. Assess prompt readiness using [`modules/spec-score.md`](./modules/spec-score.md).
-11. Capture important decisions using [`modules/decision-ledger.md`](./modules/decision-ledger.md).
-12. Compile the final implementation prompt using [`modules/prompt-compiler.md`](./modules/prompt-compiler.md).
-13. Create task files using [`modules/agent-task-pack.md`](./modules/agent-task-pack.md) when the work needs more than one safe step.
-14. Close the memory loop using [`modules/memory-loop.md`](./modules/memory-loop.md).
-15. Create the implementation prompt file in `.spec/prompts/`.
+3. Choose request depth using [`modules/request-depth.md`](./modules/request-depth.md), then classify the work using [`modules/work-classifier.md`](./modules/work-classifier.md).
+4. If the request is lightweight, run focused protection, acceptance and testing checks, return the lightweight output and stop without writing artifacts.
+5. For standard and guarded requests, run domain research using [`modules/domain-research.md`](./modules/domain-research.md).
+6. Build the routed module set from `Always Load`, `Load By Depth`, `Load By Work Type` and `Escalation Signals`.
+7. Run Foundation, Product Gap and Protection passes using only the routed modules.
+8. Use [`modules/acceptance-criteria.md`](./modules/acceptance-criteria.md) for objective delivery checks.
+9. Assess foundation readiness using [`modules/foundation-score.md`](./modules/foundation-score.md) for guarded work.
+10. Slice the work using [`modules/mvp-slicer.md`](./modules/mvp-slicer.md).
+11. Assess prompt readiness using [`modules/spec-score.md`](./modules/spec-score.md) for guarded work.
+12. Capture durable decisions using [`modules/decision-ledger.md`](./modules/decision-ledger.md) when needed.
+13. Compile an implementation prompt in `.spec/prompts/` using [`modules/prompt-compiler.md`](./modules/prompt-compiler.md) when it materially improves execution.
+14. Create task files using [`modules/agent-task-pack.md`](./modules/agent-task-pack.md) when the work needs more than one safe step.
+15. Close the memory loop using [`modules/memory-loop.md`](./modules/memory-loop.md).
 16. Format the short chat answer using [`output-contract.md`](./output-contract.md).
 
-## Mandatory Pipeline
+## Standard And Guarded Pipeline
 
-Every relevant `/spec` request must pass through this exact pipeline:
+Standard and guarded `/spec` requests pass through this pipeline using only routed modules:
 
 1. Load context
 2. Understand request
@@ -289,6 +308,8 @@ Every relevant `/spec` request must pass through this exact pipeline:
 16. Tests
 17. Rollback
 18. Memory update
+
+Lightweight requests stop after work classification, focused impact, acceptance criteria, tests and a concise next step. Do not create scores, research, decisions, prompt files, task packs, sessions or memory updates. Escalate the request before creating any artifact.
 
 ## When Context Is Missing
 

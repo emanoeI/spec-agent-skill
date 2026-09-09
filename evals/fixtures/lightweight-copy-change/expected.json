@@ -1,0 +1,9 @@
+{
+  "workType": "Feature",
+  "verdict": "proceed",
+  "requiredSections": ["verdict", "work type", "impact", "tests", "next step"],
+  "requiredSignals": ["lightweight", "copy", "existing behavior"],
+  "forbiddenSignals": ["foundation score", "domain research", "decision ledger"],
+  "shouldCreateTaskPack": false,
+  "shouldCreateArtifacts": false
+}

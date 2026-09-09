@@ -25,6 +25,7 @@ for (const entry of fs.readdirSync(fixturesDir, { withFileTypes: true })) {
   if (!Array.isArray(expected.requiredSignals) || expected.requiredSignals.length === 0) failures.push(`${entry.name}: requiredSignals must not be empty`);
   if (!Array.isArray(expected.forbiddenSignals)) failures.push(`${entry.name}: forbiddenSignals must be an array`);
   if (typeof expected.shouldCreateTaskPack !== "boolean") failures.push(`${entry.name}: shouldCreateTaskPack must be boolean`);
+  if (expected.shouldCreateArtifacts !== undefined && typeof expected.shouldCreateArtifacts !== "boolean") failures.push(`${entry.name}: shouldCreateArtifacts must be boolean when provided`);
   workTypes.add(expected.workType);
 }
 

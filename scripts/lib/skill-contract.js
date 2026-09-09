@@ -13,7 +13,7 @@ function collectSkillContract(root) {
     modules: listBasenames(path.join(skillDir, "modules")),
     adapters: listDirectories(path.join(root, "adapters")),
     workTypes: ["Greenfield", "Feature", "Refactor", "Sensitive integration", "Repair"],
-    outputSections: [...outputContract.matchAll(/^##\s+(.+)$/gm)].map((match) => match[1].trim()),
+    outputSections: unique([...outputContract.matchAll(/^##\s+(.+)$/gm)].map((match) => match[1].trim())),
     evalCases: fs.readdirSync(path.join(root, "evals", "cases"))
       .filter((file) => file.endsWith(".json"))
       .map((file) => JSON.parse(fs.readFileSync(path.join(root, "evals", "cases", file), "utf8")).id)
@@ -50,6 +50,10 @@ function listDirectories(directory) {
 
 function normalize(text) {
   return text.replace(/\r\n/g, "\n");
+}
+
+function unique(values) {
+  return [...new Set(values)];
 }
 
 module.exports = { collectSkillContract, compareContracts };

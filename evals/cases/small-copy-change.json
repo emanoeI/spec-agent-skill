@@ -1,0 +1,14 @@
+{
+  "id": "small-copy-change",
+  "prompt": "/spec troca o texto do botao Salvar para Salvar alteracoes",
+  "expectedType": "Feature",
+  "requiredSignals": [
+    "lightweight",
+    "local",
+    "reversible",
+    "focused test",
+    "do not create decision, prompt, task, session or memory artifacts"
+  ],
+  "requiredModules": ["request-depth.md"],
+  "moduleSignal": "lightweight"
+}

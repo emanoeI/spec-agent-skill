@@ -8,20 +8,29 @@ const sectionAliases = {
   tests: ["## testes", "## tests"],
   rollback: ["## rollback"],
   impact: ["## impacto", "## impact"],
-  risks: ["## falhas", "## riscos", "## risks"]
+  risks: ["## falhas", "## riscos", "## risks"],
+  "next step": ["## proximo passo", "## next step"]
 };
 const signalAliases = {
   "expected behavior": ["expected behavior", "comportamento esperado", "reproduzir"],
   "smallest safe change": ["smallest safe change", "menor mudanca segura", "reparo minimo", "correcao minima", "menor repair", "patch incremental", "causa raiz"],
-  regression: ["regression", "regressao", "nao regressao"]
+  regression: ["regression", "regressao", "nao regressao"],
+  copy: ["copy", "texto", "rotulo"],
+  "existing behavior": ["existing behavior", "comportamento existente", "comportamento do botao", "sem mudanca de comportamento", "mantem o fluxo atual", "fluxo atual"]
+};
+const verdictAliases = {
+  proceed: ["proceed", "viavel", "aprovado", "pode seguir"],
+  "narrow scope": ["narrow scope", "reduzir escopo", "escopo reduzido"],
+  hold: ["hold", "aguardar", "bloqueado"]
 };
 
 function evaluateOutput(output, expected) {
   const text = normalize(output);
   const failures = [];
 
-  if (!text.includes(expected.workType.toLowerCase())) failures.push(`missing work type: ${expected.workType}`);
-  if (!text.includes(expected.verdict.toLowerCase())) failures.push(`missing verdict: ${expected.verdict}`);
+  if (!text.includes(normalize(expected.workType))) failures.push(`missing work type: ${expected.workType}`);
+  const acceptedVerdicts = verdictAliases[expected.verdict.toLowerCase()] || [expected.verdict];
+  if (!acceptedVerdicts.some((verdict) => text.includes(normalize(verdict)))) failures.push(`missing verdict: ${expected.verdict}`);
 
   for (const section of expected.requiredSections) {
     const aliases = sectionAliases[section] || [`## ${section}`];
@@ -35,7 +44,12 @@ function evaluateOutput(output, expected) {
     if (text.includes(signal.toLowerCase())) failures.push(`forbidden signal: ${signal}`);
   }
   if (expected.shouldCreateTaskPack && !text.includes(".spec/tasks/")) failures.push("missing task pack path");
-  if (!expected.shouldCreateTaskPack && text.includes(".spec/tasks/")) failures.push("unexpected task pack path");
+  if (!expected.shouldCreateTaskPack && expected.shouldCreateArtifacts !== false && text.includes(".spec/tasks/")) failures.push("unexpected task pack path");
+  if (expected.shouldCreateArtifacts === false) {
+    for (const artifactPath of [".spec/prompts/", ".spec/tasks/", ".spec/sessions/"]) {
+      if (text.includes(artifactPath)) failures.push(`unexpected artifact path: ${artifactPath}`);
+    }
+  }
 
   return { passed: failures.length === 0, failures };
 }

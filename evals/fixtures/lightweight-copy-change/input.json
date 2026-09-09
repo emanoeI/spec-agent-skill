@@ -1,0 +1,9 @@
+{
+  "sourceCase": "small-copy-change",
+  "request": "/spec troca o texto do botao Salvar para Salvar alteracoes",
+  "context": {
+    "stage": "production",
+    "stack": "existing web application",
+    "constraints": ["button behavior must not change", "copy only"]
+  }
+}
