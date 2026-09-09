@@ -1,0 +1,16 @@
+{
+  "id": "account-deletion",
+  "prompt": "/spec adiciona exclusao de conta e dados pessoais",
+  "expectedType": "Sensitive integration",
+  "requiredSignals": [
+    "personal data",
+    "deletion",
+    "authorization",
+    "confirmation",
+    "audit",
+    "retention",
+    "rollback"
+  ],
+  "requiredModules": ["security.md", "red-flags.md"],
+  "moduleSignal": "deletion"
+}

@@ -33,7 +33,7 @@ const outputContractPath = path.join(root, "skill", "output-contract.md");
 const openaiYamlPath = path.join(root, "skill", "agents", "openai.yaml");
 const modulesDir = path.join(root, "skill", "modules");
 const commandsDir = path.join(root, "skill", "commands");
-const skill = fs.readFileSync(skillPath, "utf8");
+const skill = normalizeLineEndings(fs.readFileSync(skillPath, "utf8"));
 const router = fs.readFileSync(routerPath, "utf8");
 const outputContract = fs.readFileSync(outputContractPath, "utf8");
 const openaiYaml = fs.readFileSync(openaiYamlPath, "utf8");
@@ -182,5 +182,9 @@ function assert(condition, message) {
 }
 
 function readAll(files) {
-  return files.map((file) => fs.readFileSync(path.join(root, file), "utf8")).join("\n");
+  return files.map((file) => normalizeLineEndings(fs.readFileSync(path.join(root, file), "utf8"))).join("\n");
+}
+
+function normalizeLineEndings(text) {
+  return text.replace(/\r\n/g, "\n");
 }

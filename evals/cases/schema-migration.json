@@ -1,0 +1,16 @@
+{
+  "id": "schema-migration",
+  "prompt": "/spec altera o schema de pedidos sem perder os dados existentes",
+  "expectedType": "Refactor",
+  "requiredSignals": [
+    "migration",
+    "data integrity",
+    "backup",
+    "compatibility",
+    "expand-and-contract",
+    "before-and-after tests",
+    "rollback"
+  ],
+  "requiredModules": ["architecture.md", "regression-guard.md"],
+  "moduleSignal": "migration"
+}

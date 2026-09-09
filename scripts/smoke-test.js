@@ -253,7 +253,11 @@ function runCliRaw(cwd, args, input = "") {
 }
 
 function read(projectDir, relativePath) {
-  return fs.readFileSync(path.join(projectDir, relativePath), "utf8");
+  return normalizeLineEndings(fs.readFileSync(path.join(projectDir, relativePath), "utf8"));
+}
+
+function normalizeLineEndings(text) {
+  return text.replace(/\r\n/g, "\n");
 }
 
 function writeFile(projectDir, relativePath, content) {
