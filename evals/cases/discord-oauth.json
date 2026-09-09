@@ -1,0 +1,14 @@
+{
+  "id": "discord-oauth",
+  "prompt": "/spec integra Discord OAuth",
+  "expectedType": "Sensitive integration",
+  "requiredSignals": [
+    "OAuth",
+    "state",
+    "callback",
+    "authorization",
+    "error flow",
+    "sensitive data",
+    "rollback"
+  ]
+}

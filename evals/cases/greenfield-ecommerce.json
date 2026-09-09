@@ -1,0 +1,16 @@
+{
+  "id": "greenfield-ecommerce",
+  "prompt": "/spec faz um ecommerce",
+  "expectedType": "Greenfield",
+  "requiredSignals": [
+    "safe baseline",
+    "mvp scope",
+    "Phase 1",
+    "Do not implement yet",
+    "domain research",
+    "server-side validation",
+    "permissions",
+    "statuses",
+    "tests"
+  ]
+}

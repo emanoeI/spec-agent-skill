@@ -1,0 +1,12 @@
+{
+  "id": "public-listing-scale",
+  "prompt": "/spec cria um endpoint público que lista todos os produtos",
+  "expectedType": "Feature",
+  "requiredSignals": [
+    "paginate",
+    "index",
+    "rate limit",
+    "server-side validation",
+    "timeout"
+  ]
+}

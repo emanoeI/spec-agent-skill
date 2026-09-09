@@ -1,0 +1,14 @@
+{
+  "id": "payment-integration",
+  "prompt": "/spec integra pagamento com cartao e pix",
+  "expectedType": "Sensitive integration",
+  "requiredSignals": [
+    "payment",
+    "idempotency",
+    "server-side validation",
+    "logs",
+    "error flow",
+    "sensitive data",
+    "rollback"
+  ]
+}

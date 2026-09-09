@@ -1,0 +1,53 @@
+{
+  "name": "spec-skill",
+  "version": "0.1.0",
+  "description": "Markdown-only first-prompt hardener for AI coding agents.",
+  "license": "MIT",
+  "author": "Emanoel Peres",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emanoeI/spec-agent-skill.git"
+  },
+  "homepage": "https://github.com/emanoeI/spec-agent-skill#readme",
+  "bugs": {
+    "url": "https://github.com/emanoeI/spec-agent-skill/issues"
+  },
+  "bin": {
+    "spec": "./bin/spec.js"
+  },
+  "files": [
+    "bin",
+    "skill",
+    "adapters",
+    "docs",
+    "README.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "type": "commonjs",
+  "scripts": {
+    "test": "node scripts/smoke-test.js",
+    "smoke": "node scripts/smoke-test.js",
+    "pack:check": "node scripts/pack-check.js",
+    "public:check": "node scripts/public-check.js",
+    "eval": "node scripts/eval-spec.js",
+    "distribution:test": "node scripts/distribution-test.js",
+    "test:all": "node scripts/public-check.js && node scripts/eval-spec.js && node scripts/smoke-test.js && node scripts/pack-check.js && node scripts/distribution-test.js"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "coding-agents",
+    "codex",
+    "claude-code",
+    "cursor",
+    "vibecoding",
+    "prompt",
+    "specification",
+    "product-owner"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

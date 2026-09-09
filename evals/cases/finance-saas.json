@@ -1,0 +1,20 @@
+{
+  "id": "finance-saas",
+  "prompt": "/spec cria um SaaS financeiro para pequenas empresas",
+  "expectedType": "Greenfield",
+  "requiredSignals": [
+    "finance",
+    "Vibecoding constraints",
+    "Phase 1",
+    "audit",
+    "tenant",
+    "permissions",
+    "server-side validation",
+    "official statuses",
+    "Spec Score",
+    "Foundation Score",
+    "MVP Slice",
+    "Decision Ledger",
+    "Agent Task Pack"
+  ]
+}

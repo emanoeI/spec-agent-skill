@@ -1,0 +1,41 @@
+---
+description: Spec - first-prompt hardener for AI coding agents
+alwaysApply: true
+---
+
+# Spec
+
+Before implementing, inspect `.spec/` and follow `.spec/SKILL.md`.
+
+Spec is Markdown-only. It does not generate code by itself.
+Spec helps the active coding agent make safer decisions before implementation.
+
+For any `/spec` request:
+- read `.spec/SKILL.md`
+- follow `.spec/router.md`
+- format with `.spec/output-contract.md`
+- use `/spec init` inside the agent to initialize project context
+- never ask the user to run `/spec` in cmd, PowerShell or bash
+- use the user's language during onboarding
+- read `.spec/CONTEXT.md`
+- read `.spec/RULES.md`
+- read `.spec/ARCHITECTURE.md`
+- read `.spec/DESIGN.md`
+- read `.spec/RISKS.md`
+- read relevant files in `.spec/sessions/`
+- classify the work
+- research the domain
+- detect red flags
+- protect existing behavior
+- assess readiness with Spec Score
+- define tests and rollback
+- suggest memory updates
+- generate a concise implementation prompt
+
+No final implementation prompt without:
+- reading `.spec/`
+- domain research
+- project impact analysis
+- regression risks
+- minimum test checklist
+- context update suggestion

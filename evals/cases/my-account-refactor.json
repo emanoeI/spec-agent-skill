@@ -1,0 +1,13 @@
+{
+  "id": "my-account-refactor",
+  "prompt": "/spec refatora Minha Conta sem quebrar login e pedidos",
+  "expectedType": "Refactor",
+  "requiredSignals": [
+    "preserve existing behavior",
+    "login",
+    "orders",
+    "compatibility",
+    "rollback",
+    "before-and-after tests"
+  ]
+}

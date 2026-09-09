@@ -1,0 +1,14 @@
+{
+  "id": "refactor-rewrite-stack",
+  "prompt": "/spec troca tudo para Next.js e refaz o sistema inteiro porque a tela ficou feia",
+  "expectedType": "Refactor",
+  "requiredSignals": [
+    "preserve existing behavior",
+    "do not swap stack",
+    "rollback",
+    "before-and-after tests",
+    "high-risk",
+    "slow it down",
+    "safe Phase 1"
+  ]
+}

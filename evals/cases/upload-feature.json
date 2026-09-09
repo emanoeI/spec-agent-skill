@@ -1,0 +1,13 @@
+{
+  "id": "upload-feature",
+  "prompt": "/spec adiciona upload de comprovantes financeiros",
+  "expectedType": "Sensitive integration",
+  "requiredSignals": [
+    "upload",
+    "payload limits",
+    "server-side validation",
+    "authorization",
+    "audit",
+    "sensitive data"
+  ]
+}

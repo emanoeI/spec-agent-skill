@@ -1,0 +1,13 @@
+{
+  "id": "small-internal-tool",
+  "prompt": "/spec cria um sistema interno simples para 1 usuario cadastrar e consultar fornecedores",
+  "expectedType": "Greenfield",
+  "requiredSignals": [
+    "stack complexity proportional to product complexity",
+    "single-user",
+    "server-rendered",
+    "simplest viable stack",
+    "Proportionality Check",
+    "Avoid disproportionate architecture for small problems"
+  ]
+}

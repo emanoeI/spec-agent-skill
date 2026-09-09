@@ -1,0 +1,7 @@
+interface:
+  display_name: "Spec"
+  short_description: "Safer first prompts for coding agents"
+  default_prompt: "Use $spec init to set up safer project context before coding."
+
+policy:
+  allow_implicit_invocation: true

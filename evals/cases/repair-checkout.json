@@ -1,0 +1,13 @@
+{
+  "id": "repair-checkout",
+  "prompt": "/spec corrige checkout quebrado sem perder pedidos existentes",
+  "expectedType": "Repair",
+  "requiredSignals": [
+    "expected behavior",
+    "preserve working parts",
+    "smallest safe change",
+    "regression checklist",
+    "existing data remains readable",
+    "rollback"
+  ]
+}
