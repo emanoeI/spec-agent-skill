@@ -33,7 +33,8 @@
     "public:check": "node scripts/public-check.js",
     "eval": "node scripts/eval-spec.js",
     "distribution:test": "node scripts/distribution-test.js",
-    "test:all": "node scripts/public-check.js && node scripts/eval-spec.js && node scripts/smoke-test.js && node scripts/pack-check.js && node scripts/distribution-test.js"
+    "skill:validate": "node scripts/validate-skill.js && node scripts/validate-skill-test.js",
+    "test:all": "npm run skill:validate && node scripts/public-check.js && node scripts/eval-spec.js && node scripts/smoke-test.js && node scripts/pack-check.js && node scripts/distribution-test.js"
   },
   "keywords": [
     "ai",
