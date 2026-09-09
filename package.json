@@ -32,11 +32,12 @@
     "pack:check": "node scripts/pack-check.js",
     "public:check": "node scripts/public-check.js",
     "eval": "node scripts/eval-spec.js",
+    "eval:fixtures": "node scripts/validate-eval-fixtures.js",
     "distribution:test": "node scripts/distribution-test.js",
     "skill:validate": "node scripts/validate-skill.js && node scripts/validate-skill-test.js",
     "skill:pack": "node scripts/pack-skill.js",
     "skill:pack:test": "node scripts/pack-skill-test.js",
-    "test:all": "npm run skill:validate && npm run skill:pack:test && node scripts/public-check.js && node scripts/eval-spec.js && node scripts/smoke-test.js && node scripts/pack-check.js && node scripts/distribution-test.js"
+    "test:all": "npm run skill:validate && npm run skill:pack:test && npm run eval:fixtures && node scripts/public-check.js && node scripts/eval-spec.js && node scripts/smoke-test.js && node scripts/pack-check.js && node scripts/distribution-test.js"
   },
   "keywords": [
     "ai",

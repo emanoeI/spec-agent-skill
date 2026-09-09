@@ -1,0 +1,9 @@
+{
+  "sourceCase": "my-account-refactor",
+  "request": "/spec refatora Minha Conta sem quebrar login e pedidos",
+  "context": {
+    "stage": "production",
+    "stack": "existing application",
+    "constraints": ["login must remain stable", "past orders must remain readable"]
+  }
+}

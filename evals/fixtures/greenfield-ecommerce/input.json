@@ -1,0 +1,9 @@
+{
+  "sourceCase": "greenfield-ecommerce",
+  "request": "/spec cria um ecommerce para uma pequena loja de roupas",
+  "context": {
+    "stage": "idea",
+    "stack": "unknown",
+    "constraints": ["single owner", "small catalog", "ship a useful first version"]
+  }
+}

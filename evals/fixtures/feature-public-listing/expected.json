@@ -1,0 +1,8 @@
+{
+  "workType": "Feature",
+  "verdict": "proceed",
+  "requiredSections": ["verdict", "work type", "impact", "tests", "rollback"],
+  "requiredSignals": ["pagination", "index", "rate limit", "timeout"],
+  "forbiddenSignals": ["return every row", "rewrite the API"],
+  "shouldCreateTaskPack": false
+}

@@ -1,0 +1,8 @@
+{
+  "workType": "Refactor",
+  "verdict": "narrow scope",
+  "requiredSections": ["verdict", "work type", "impact", "tests", "rollback"],
+  "requiredSignals": ["preserve existing behavior", "compatibility", "before-and-after tests"],
+  "forbiddenSignals": ["rewrite from scratch", "replace the stack"],
+  "shouldCreateTaskPack": true
+}

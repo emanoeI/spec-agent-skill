@@ -1,0 +1,9 @@
+{
+  "sourceCase": "public-listing-scale",
+  "request": "/spec adiciona uma pagina publica com todos os produtos",
+  "context": {
+    "stage": "production",
+    "stack": "existing application",
+    "constraints": ["growing catalog", "existing product routes must remain stable"]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "sourceCase": "payment-integration",
+  "request": "/spec integra pagamento com cartao e pix",
+  "context": {
+    "stage": "mvp",
+    "stack": "existing web application",
+    "constraints": ["no provider selected", "orders already exist"]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "sourceCase": "repair-checkout",
+  "request": "/spec corrige checkout quebrado sem perder pedidos existentes",
+  "context": {
+    "stage": "production",
+    "stack": "existing web application",
+    "constraints": ["preserve orders", "avoid unrelated cleanup"]
+  }
+}

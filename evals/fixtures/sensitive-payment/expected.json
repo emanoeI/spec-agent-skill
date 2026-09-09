@@ -1,0 +1,8 @@
+{
+  "workType": "Sensitive integration",
+  "verdict": "hold",
+  "requiredSections": ["verdict", "work type", "risks", "tests", "rollback"],
+  "requiredSignals": ["idempotency", "webhook", "server-side validation", "sensitive data"],
+  "forbiddenSignals": ["log card data", "trust client validation"],
+  "shouldCreateTaskPack": true
+}

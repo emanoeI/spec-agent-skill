@@ -1,0 +1,8 @@
+{
+  "workType": "Greenfield",
+  "verdict": "narrow scope",
+  "requiredSections": ["verdict", "work type", "foundation", "scope", "tests", "rollback"],
+  "requiredSignals": ["catalog", "checkout", "server-side validation", "phase 1"],
+  "forbiddenSignals": ["microservices", "event bus", "multi-region"],
+  "shouldCreateTaskPack": true
+}
