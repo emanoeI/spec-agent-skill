@@ -92,8 +92,11 @@ npm test
 npm run public:check
 npm run eval
 npm run pack:check
+npm run skill:pack
 npm run distribution:test
 ```
+
+`npm run skill:pack` creates a standalone skill bundle in `dist/spec/`, with `SKILL.md` at its root and no repository-only files.
 
 Code style favors clear names, small functions, and comments only where they explain a non-obvious reason or constraint. Public checks reject generated-content and authorship markers.
 
