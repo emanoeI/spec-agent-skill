@@ -42,6 +42,34 @@ const IGNORED_DIRS = new Set([
   "tmp",
   "vendor"
 ]);
+const GENERIC_SPEC_BLOCK = `## Spec
+
+Before any implementation prompt, read \`.spec/SKILL.md\` and inspect the \`.spec/\` directory.
+Follow \`.spec/router.md\` to choose the routed module set, then format the answer with \`.spec/output-contract.md\`.
+Use \`spec init\` inside the active coding agent to initialize project context. Do not ask the user to run Spec in the operating-system terminal.
+Use the user's language during onboarding.
+
+Spec is a Markdown-only first-prompt hardener for AI coding agents. It does not generate code by itself. It guides the active agent to research the domain, classify the work, protect existing behavior, detect risks, define tests, and produce safer implementation prompts.
+Spec is not anti-vibecoding. It helps the active coding agent make safer decisions before implementation.
+
+Required rule:
+
+No final implementation prompt without:
+- reading \`.spec/\`
+- domain research
+- work classification
+- Foundation Score assessment
+- Spec Score assessment
+- red flag detection
+- project impact analysis
+- existing behavior preservation
+- regression risks
+- MVP slice
+- decision ledger update
+- agent task pack when useful
+- rollback plan
+- minimum test checklist
+- context update suggestion`;
 const AGENTS_SPEC_BLOCK = `## Spec
 
 Before any implementation prompt, read \`.spec/SKILL.md\` and inspect the \`.spec/\` directory.
@@ -111,43 +139,43 @@ function main() {
 
   if (command === "install") {
     const mode = parseInstallMode(args.slice(1));
-    installSpec(targetDir);
 
     if (mode === "generic" || mode === "default") {
-      installGenericAdapter(targetDir);
+      installGenericAdapter(targetDir, { refresh: args.includes("--refresh") });
       printAdapterMessage("generic agents", [".spec/", "AGENTS.md"], "spec");
       return;
     }
 
     if (mode === "codex") {
-      installCodexAdapter(targetDir);
+      installCodexAdapter(targetDir, { refresh: args.includes("--refresh") });
       printAdapterMessage("Codex", [".spec/", ".agents/skills/spec/", "AGENTS.md"], "$spec");
       return;
     }
 
     if (mode === "claude") {
-      installClaudeAdapter(targetDir);
+      installClaudeAdapter(targetDir, { refresh: args.includes("--refresh") });
       printAdapterMessage("Claude Code", [".spec/", ".claude/skills/spec/", "CLAUDE.md"], "/spec");
       return;
     }
 
     if (mode === "cursor") {
-      installCursorAdapter(targetDir);
+      installCursorAdapter(targetDir, { refresh: args.includes("--refresh") });
       printAdapterMessage("Cursor", [".spec/", ".cursor/rules/spec.mdc", "AGENTS.md"], "/spec");
       return;
     }
 
     if (mode === "antigravity") {
-      installAntigravityAdapter(targetDir);
+      installAntigravityAdapter(targetDir, { refresh: args.includes("--refresh") });
       printAdapterMessage("Antigravity", [".spec/", ".agents/rules/spec.md"], "antigravity");
       return;
     }
 
-    installGenericAdapter(targetDir);
-    installCodexAdapter(targetDir);
-    installClaudeAdapter(targetDir);
-    installCursorAdapter(targetDir);
-    installAntigravityAdapter(targetDir);
+    const installOptions = { refresh: args.includes("--refresh") };
+    installGenericAdapter(targetDir, installOptions);
+    installCodexAdapter(targetDir, installOptions);
+    installClaudeAdapter(targetDir, installOptions);
+    installCursorAdapter(targetDir, installOptions);
+    installAntigravityAdapter(targetDir, installOptions);
     printAdapterMessage("all supported agents", [
       ".spec/",
       ".agents/skills/spec/",
@@ -205,6 +233,7 @@ function printHelp() {
   console.log("  spec install --cursor    Install Spec for Cursor");
   console.log("  spec install --antigravity Install Spec for Antigravity");
   console.log("  spec install --all       Install all adapters");
+  console.log("  spec install --refresh   Refresh installed runtime files explicitly");
   console.log("  spec check --ci          Check readiness with a failing exit code (for CI)");
   console.log("  spec help                Show help\n");
   console.log("After install, restart your coding agent and run inside it:");
@@ -242,13 +271,7 @@ function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function writeIfMissing(filePath, content) {
-  if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, content, "utf8");
-  }
-}
-
-function installSpec(targetDir) {
+function installSpec(targetDir, options = {}) {
   const specDir = path.join(targetDir, SPEC_DIRNAME);
   const sessionsDir = path.join(specDir, "sessions");
   const promptsDir = path.join(specDir, "prompts");
@@ -258,80 +281,80 @@ function installSpec(targetDir) {
   ensureDir(sessionsDir);
   ensureDir(promptsDir);
   ensureDir(tasksDir);
-  copySkillRuntime(specDir, { includeAgentMetadata: false });
-  fs.writeFileSync(path.join(specDir, "README.md"), specReadmeContent(), "utf8");
+  copySkillRuntime(specDir, { includeAgentMetadata: false, refresh: options.refresh });
+  writeManagedFile(path.join(specDir, "README.md"), specReadmeContent(), options.refresh);
 
   for (const fileName of SPEC_FILES) {
     const templatePath = path.join(TEMPLATE_DIR, fileName);
     const targetPath = path.join(specDir, fileName);
     const templateContent = fs.readFileSync(templatePath, "utf8");
-    writeIfMissing(targetPath, templateContent);
+    writeManagedFile(targetPath, templateContent, options.refresh);
   }
 }
 
-function installGenericAdapter(targetDir) {
-  installSpec(targetDir);
+function installGenericAdapter(targetDir, options = {}) {
+  installSpec(targetDir, options);
+  upsertMarkedBlock(path.join(targetDir, "AGENTS.md"), GENERIC_SPEC_BLOCK);
+}
+
+function installCodexAdapter(targetDir, options = {}) {
+  installSpec(targetDir, options);
+  copySkillForAgent(path.join(targetDir, ".agents", "skills", "spec"), options);
   upsertMarkedBlock(path.join(targetDir, "AGENTS.md"), AGENTS_SPEC_BLOCK);
 }
 
-function installCodexAdapter(targetDir) {
-  installSpec(targetDir);
-  copySkillForAgent(path.join(targetDir, ".agents", "skills", "spec"));
-  upsertMarkedBlock(path.join(targetDir, "AGENTS.md"), AGENTS_SPEC_BLOCK);
-}
-
-function installClaudeAdapter(targetDir) {
-  installSpec(targetDir);
-  copySkillForAgent(path.join(targetDir, ".claude", "skills", "spec"));
+function installClaudeAdapter(targetDir, options = {}) {
+  installSpec(targetDir, options);
+  copySkillForAgent(path.join(targetDir, ".claude", "skills", "spec"), options);
   upsertMarkedBlock(path.join(targetDir, "CLAUDE.md"), CLAUDE_SPEC_BLOCK);
 }
 
-function installCursorAdapter(targetDir) {
-  installSpec(targetDir);
+function installCursorAdapter(targetDir, options = {}) {
+  installSpec(targetDir, options);
   const cursorRulesDir = path.join(targetDir, ".cursor", "rules");
   ensureDir(cursorRulesDir);
-  fs.writeFileSync(
+  writeManagedFile(
     path.join(cursorRulesDir, "spec.mdc"),
     fs.readFileSync(path.join(ADAPTERS_DIR, "cursor", "spec.template.mdc"), "utf8"),
-    "utf8"
+    options.refresh
   );
   upsertMarkedBlock(path.join(targetDir, "AGENTS.md"), AGENTS_SPEC_BLOCK);
 }
 
-function installAntigravityAdapter(targetDir) {
-  installSpec(targetDir);
+function installAntigravityAdapter(targetDir, options = {}) {
+  installSpec(targetDir, options);
   const rulesDir = path.join(targetDir, ".agents", "rules");
   ensureDir(rulesDir);
-  fs.writeFileSync(
+  writeManagedFile(
     path.join(rulesDir, "spec.md"),
     fs.readFileSync(path.join(ADAPTERS_DIR, "antigravity", "spec.rule.md"), "utf8"),
-    "utf8"
+    options.refresh
   );
 }
 
-function copySkillForAgent(destinationDir) {
+function copySkillForAgent(destinationDir, options = {}) {
   ensureDir(destinationDir);
-  copySkillRuntime(destinationDir, { includeAgentMetadata: true });
+  copySkillRuntime(destinationDir, { includeAgentMetadata: true, refresh: options.refresh });
 }
 
 function copySkillRuntime(destinationDir, options = {}) {
-  fs.writeFileSync(path.join(destinationDir, "SKILL.md"), fs.readFileSync(path.join(SOURCE_SKILL_DIR, "SKILL.md"), "utf8"), "utf8");
-  fs.writeFileSync(path.join(destinationDir, "router.md"), fs.readFileSync(path.join(SOURCE_SKILL_DIR, "router.md"), "utf8"), "utf8");
-  fs.writeFileSync(path.join(destinationDir, "onboarding.md"), fs.readFileSync(path.join(SOURCE_SKILL_DIR, "onboarding.md"), "utf8"), "utf8");
-  fs.writeFileSync(
+  writeManagedFile(path.join(destinationDir, "SKILL.md"), fs.readFileSync(path.join(SOURCE_SKILL_DIR, "SKILL.md"), "utf8"), options.refresh);
+  writeManagedFile(path.join(destinationDir, "router.md"), fs.readFileSync(path.join(SOURCE_SKILL_DIR, "router.md"), "utf8"), options.refresh);
+  writeManagedFile(path.join(destinationDir, "onboarding.md"), fs.readFileSync(path.join(SOURCE_SKILL_DIR, "onboarding.md"), "utf8"), options.refresh);
+  writeManagedFile(
     path.join(destinationDir, "output-contract.md"),
     fs.readFileSync(path.join(SOURCE_SKILL_DIR, "output-contract.md"), "utf8"),
-    "utf8"
+    options.refresh
   );
-  copyDirectory(path.join(SOURCE_SKILL_DIR, "commands"), path.join(destinationDir, "commands"));
-  copyDirectory(path.join(SOURCE_SKILL_DIR, "modules"), path.join(destinationDir, "modules"));
+  copyDirectory(path.join(SOURCE_SKILL_DIR, "commands"), path.join(destinationDir, "commands"), options);
+  copyDirectory(path.join(SOURCE_SKILL_DIR, "modules"), path.join(destinationDir, "modules"), options);
 
   if (options.includeAgentMetadata) {
-    copyDirectory(path.join(SOURCE_SKILL_DIR, "agents"), path.join(destinationDir, "agents"));
+    copyDirectory(path.join(SOURCE_SKILL_DIR, "agents"), path.join(destinationDir, "agents"), options);
   }
 }
 
-function copyDirectory(sourceDir, destinationDir) {
+function copyDirectory(sourceDir, destinationDir, options = {}) {
   ensureDir(destinationDir);
 
   for (const entry of fs.readdirSync(sourceDir, { withFileTypes: true })) {
@@ -339,10 +362,16 @@ function copyDirectory(sourceDir, destinationDir) {
     const destinationPath = path.join(destinationDir, entry.name);
 
     if (entry.isDirectory()) {
-      copyDirectory(sourcePath, destinationPath);
+      copyDirectory(sourcePath, destinationPath, options);
     } else {
-      fs.writeFileSync(destinationPath, fs.readFileSync(sourcePath, "utf8"), "utf8");
+      writeManagedFile(destinationPath, fs.readFileSync(sourcePath, "utf8"), options.refresh);
     }
+  }
+}
+
+function writeManagedFile(filePath, content, refresh = false) {
+  if (refresh || !fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, content, "utf8");
   }
 }
 
@@ -389,6 +418,8 @@ It does not generate code by itself.
 Use Spec inside your coding agent:
 - Codex: $spec init, then $spec <request>
 - Claude/Cursor-style agents: /spec init, then /spec <request>
+- Antigravity: initialize Spec with .agents/rules/spec.md enabled
+- Generic agents: spec init, then spec <request>
 
 Do not type /spec in cmd, PowerShell or bash.
 
@@ -411,18 +442,33 @@ function checkSpec(targetDir, args = []) {
 
   console.log("\nVerdict:");
   if (report.failed.length === 0) {
-    console.log("Ready for a guarded /spec request.");
+    console.log("Ready for a guarded Spec request.");
   } else {
     console.log("Weak areas found. Strengthen Spec before trusting implementation prompts.");
-    console.log("Recommended path: run the matching init command inside your coding agent:");
-    console.log("- Codex: $spec init");
-    console.log("- Claude Code/Cursor: /spec init");
-    console.log("- Generic: spec init");
+    printCheckNextStep(targetDir);
   }
 
   if (ciMode && report.failed.length > 0) {
     process.exitCode = 1;
   }
+}
+
+function printCheckNextStep(targetDir) {
+  console.log("Recommended path: initialize Spec inside the active coding agent:");
+  const adapters = [];
+  if (fs.existsSync(path.join(targetDir, ".agents", "rules", "spec.md"))) {
+    adapters.push("- Antigravity: ask the agent to initialize Spec with the workspace rule enabled.");
+  }
+  if (fs.existsSync(path.join(targetDir, ".agents", "skills", "spec"))) {
+    adapters.push("- Codex: $spec init");
+  }
+  if (fs.existsSync(path.join(targetDir, ".claude", "skills", "spec")) || fs.existsSync(path.join(targetDir, ".cursor", "rules", "spec.mdc"))) {
+    adapters.push("- Claude Code/Cursor: /spec init");
+  }
+  if (adapters.length === 0) {
+    adapters.push("- Generic agent: spec init");
+  }
+  adapters.forEach((adapter) => console.log(adapter));
 }
 
 function buildSpecCheckReport(targetDir) {

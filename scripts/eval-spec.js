@@ -45,6 +45,10 @@ for (const testCase of cases) {
   if (testCase.requiredModules && testCase.requiredModules.length > 0 && !testCase.moduleSignal) {
     schemaFailures.push(`moduleSignal is required with requiredModules: ${testCase.id || "<missing>"}`);
   }
+
+  if (testCase.requiredRoutes && !Array.isArray(testCase.requiredRoutes)) {
+    schemaFailures.push(`requiredRoutes must be an array: ${testCase.id || "<missing>"}`);
+  }
 }
 
 let failures = 0;
@@ -104,6 +108,17 @@ for (const testCase of cases) {
     const moduleText = fs.readFileSync(modulePath, "utf8").toLowerCase();
     if (!moduleText.includes(testCase.moduleSignal.toLowerCase())) {
       missing.push(`${module} lacks: ${testCase.moduleSignal}`);
+    }
+  }
+
+  for (const route of testCase.requiredRoutes || []) {
+    const signal = String(route.signal || "").toLowerCase();
+    const module = String(route.module || "").toLowerCase();
+    const routed = routerText
+      .split(/\r?\n/)
+      .some((line) => line.includes(signal) && line.includes(`modules/${module}`));
+    if (!routed) {
+      missing.push(`route: ${route.signal} -> ${route.module}`);
     }
   }
 

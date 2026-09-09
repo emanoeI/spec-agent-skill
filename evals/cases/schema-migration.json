@@ -12,5 +12,9 @@
     "rollback"
   ],
   "requiredModules": ["architecture.md", "regression-guard.md"],
-  "moduleSignal": "migration"
+  "moduleSignal": "migration",
+  "requiredRoutes": [
+    { "signal": "migration", "module": "architecture.md" },
+    { "signal": "migration", "module": "regression-guard.md" }
+  ]
 }

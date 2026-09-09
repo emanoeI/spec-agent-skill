@@ -40,6 +40,7 @@ const openaiYaml = fs.readFileSync(openaiYamlPath, "utf8");
 const initCommand = fs.readFileSync(path.join(root, "skill", "commands", "init.md"), "utf8");
 const onboarding = fs.readFileSync(path.join(root, "skill", "onboarding.md"), "utf8");
 const codexAdapter = fs.readFileSync(path.join(root, "adapters", "codex", "AGENTS.template.md"), "utf8");
+const genericAdapter = fs.readFileSync(path.join(root, "adapters", "generic", "AGENTS.template.md"), "utf8");
 const claudeAdapter = fs.readFileSync(path.join(root, "adapters", "claude", "CLAUDE.template.md"), "utf8");
 const cursorAdapter = fs.readFileSync(path.join(root, "adapters", "cursor", "spec.template.mdc"), "utf8");
 const antigravityAdapter = fs.readFileSync(path.join(root, "adapters", "antigravity", "spec.rule.md"), "utf8");
@@ -149,6 +150,8 @@ assert(codexAdapter.includes(".spec/router.md"), "Codex adapter must route throu
 assert(claudeAdapter.includes(".spec/router.md"), "Claude adapter must route through .spec/router.md.");
 assert(cursorAdapter.includes(".spec/router.md"), "Cursor adapter must route through .spec/router.md.");
 assert(codexAdapter.includes("$spec init"), "Codex adapter must use agent-side init.");
+assert(genericAdapter.includes("spec init"), "Generic adapter must use generic agent-side init.");
+assert(!genericAdapter.includes("$spec"), "Generic adapter must not use Codex commands.");
 assert(claudeAdapter.includes("/spec init"), "Claude adapter must use agent-side init.");
 assert(cursorAdapter.includes("/spec init"), "Cursor adapter must use agent-side init.");
 assert(antigravityAdapter.includes(".spec/SKILL.md"), "Antigravity adapter must read the Spec skill.");

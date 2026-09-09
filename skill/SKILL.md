@@ -11,6 +11,8 @@ Spec is not a documentation scaffold.
 Spec is not anti-vibecoding.
 Spec helps users and agents move faster with fewer avoidable mistakes.
 
+Scale the depth to the request. Use the full pipeline for features, refactors, repairs, integrations and other changes with product or regression risk. For a small, local and reversible change, keep the same safety checks concise and do not create unnecessary task packs or long reports.
+
 Spec is invoked inside coding agents, not as a shell command.
 The terminal is only for installation, diagnostics and CI checks.
 

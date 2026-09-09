@@ -157,7 +157,7 @@ function testDocumentRefineCheckCommands() {
   const ciResult = runCli(projectDir, ["check", "--ci"]);
 
   assert(result.stdout.includes("Spec Check"), "check command did not produce output.");
-  assert(ciResult.stdout.includes("Ready for a guarded /spec request."), "check --ci did not pass a prepared project.");
+  assert(ciResult.stdout.includes("Ready for a guarded Spec request."), "check --ci did not pass a prepared project.");
   assert(read(projectDir, ".spec/ARCHITECTURE.md").includes("Documented Project Shape"), "document command did not update architecture.");
   assert(read(projectDir, ".spec/RISKS.md").includes("Refined Risks"), "refine command did not update risks.");
 }

@@ -12,5 +12,8 @@
     "rollback"
   ],
   "requiredModules": ["security.md", "red-flags.md"],
-  "moduleSignal": "deletion"
+  "moduleSignal": "deletion",
+  "requiredRoutes": [
+    { "signal": "personal data", "module": "security.md" }
+  ]
 }

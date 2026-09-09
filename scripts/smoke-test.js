@@ -68,11 +68,23 @@ function testInstall() {
 
   // Plain `spec install` (no flag) installs the generic adapter and AGENTS.md.
   assert(fs.existsSync(path.join(projectDir, "AGENTS.md")), "AGENTS.md missing after plain install.");
+  const genericAgents = read(projectDir, "AGENTS.md");
+  assert(genericAgents.includes("spec init"), "Generic AGENTS.md is missing the generic init instruction.");
+  assert(!genericAgents.includes("$spec"), "Generic AGENTS.md should not contain Codex commands.");
+
+  fs.writeFileSync(path.join(projectDir, ".spec", "SKILL.md"), "custom local skill\n", "utf8");
+  runCli(projectDir, ["install"]);
+  assert(read(projectDir, ".spec/SKILL.md") === "custom local skill\n", "Install should preserve custom runtime files by default.");
+  runCli(projectDir, ["install", "--refresh"]);
+  assert(read(projectDir, ".spec/SKILL.md").startsWith("---\nname: spec\n"), "Refresh should restore managed runtime files.");
 
   const help = runCli(projectDir, ["help"]);
   assert(help.stdout.includes("spec install"), "help should document the install command.");
   assert(!help.stdout.includes("spec start"), "help should not mention removed terminal onboarding.");
   assert(!help.stdout.includes("spec doctor"), "help should not mention the removed doctor command.");
+
+  const weakCheck = runCliRaw(projectDir, ["check", "--ci"]);
+  assert(weakCheck.stdout.includes("Generic agent: spec init"), "check should detect the generic adapter dialect.");
 
   // Removed terminal commands should fall through to help with a failing code.
   for (const removed of ["start", "document", "refine", "doctor"]) {
@@ -209,7 +221,7 @@ function testDocumentRefineCheck() {
   assert(rules.includes("Refined Guardrails"), "refine did not update RULES.md.");
   assert(prompts.includes("Prompt Requirements"), "refine did not update PROMPTS.md.");
   assert(check.stdout.includes("Spec Check"), "check command did not run.");
-  assert(ciCheck.stdout.includes("Ready for a guarded /spec request."), "check --ci did not pass a prepared project.");
+  assert(ciCheck.stdout.includes("Ready for a guarded Spec request."), "check --ci did not pass a prepared project.");
   assert(weakCheck.status === 1, "check --ci should fail when Spec is not installed.");
   assert(!fs.existsSync(path.join(weakProjectDir, ".spec")), "check --ci should not install Spec as a side effect.");
 }

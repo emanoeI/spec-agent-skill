@@ -47,6 +47,12 @@ Route by the first word after `spec`:
 If the first word does not match a command but the intent is "set up Spec", route to `init`.
 If the user typed `/spec` in the operating-system terminal and got an error, explain that `/spec` is an agent command, not a shell command.
 
+Size the response before running the passes:
+
+- Small and reversible: use the relevant modules briefly, state assumptions, define one or two checks and avoid a task pack unless the change spans files.
+- Product, cross-cutting or risky: run the full routed pipeline and create the prompt, decision and task files required by the output contract.
+- Unclear or broad: use the full product-gap and protection passes, then narrow the request before proposing implementation.
+
 ## Internal Layers
 
 1. Input Layer
