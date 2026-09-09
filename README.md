@@ -23,6 +23,7 @@ Install one adapter when you only use one agent:
 spec install --codex
 spec install --claude
 spec install --cursor
+spec install --antigravity
 spec install --generic
 ```
 
@@ -57,6 +58,7 @@ The adapter adds the agent-specific instruction file:
 | Codex | `.agents/skills/spec/`, `AGENTS.md` |
 | Claude Code | `.claude/skills/spec/`, `CLAUDE.md` |
 | Cursor | `.cursor/rules/spec.mdc`, `AGENTS.md` |
+| Antigravity | `.agents/rules/spec.md` |
 
 Existing context files are preserved. Spec replaces only its marked block in `AGENTS.md` or `CLAUDE.md`.
 
@@ -100,6 +102,7 @@ npm run distribution:test
 - [Codex adapter](./docs/codex.md)
 - [Claude Code adapter](./docs/claude-code.md)
 - [Cursor adapter](./docs/cursor.md)
+- [Antigravity adapter](./docs/antigravity.md)
 - [Generic agent adapter](./docs/generic-agent.md)
 - [Contributing](./CONTRIBUTING.md)
 - [Security policy](./SECURITY.md)
@@ -107,4 +110,3 @@ npm run distribution:test
 ## License
 
 MIT. See [LICENSE](./LICENSE).
-

@@ -36,6 +36,7 @@ function testRepeatedAdapterInstalls() {
   assert(count(agents, "<!-- SPEC:START -->") === 1, "AGENTS.md duplicated Spec block.");
   assert(count(claude, "<!-- SPEC:START -->") === 1, "CLAUDE.md duplicated Spec block.");
   assert(fs.existsSync(path.join(projectDir, ".cursor", "rules", "spec.mdc")), "Cursor adapter missing after repeated install.");
+  assert(fs.existsSync(path.join(projectDir, ".agents", "rules", "spec.md")), "Antigravity adapter missing after repeated install.");
 }
 
 function testStartAcrossProjectShapes() {

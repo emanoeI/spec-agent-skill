@@ -33,4 +33,3 @@ npm publish
 ```
 
 The npm package is `spec-skill`; its installed binary is `spec`.
-

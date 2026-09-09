@@ -101,6 +101,10 @@ function testAdapters() {
   runCli(projectDir, ["install", "--cursor"]);
   assert(fs.existsSync(path.join(projectDir, ".cursor", "rules", "spec.mdc")), "Cursor rule missing.");
 
+  runCli(projectDir, ["install", "--antigravity"]);
+  assert(fs.existsSync(path.join(projectDir, ".agents", "rules", "spec.md")), "Antigravity rule missing.");
+  assert(read(projectDir, path.join(".agents", "rules", "spec.md")).includes(".spec/router.md"), "Antigravity rule is missing router instruction.");
+
   runCli(projectDir, ["install", "--all"]);
   runCli(projectDir, ["install", "--all"]);
 
@@ -116,6 +120,8 @@ function testAdapters() {
   assert(claude.includes("/spec init"), "CLAUDE.md is missing agent-side init instruction.");
   assert(!claude.includes("$spec"), "CLAUDE.md should not recommend Codex $spec commands.");
   assert(!claude.includes("spec start"), "CLAUDE.md should not recommend terminal onboarding.");
+
+  assert(fs.existsSync(path.join(projectDir, ".agents", "rules", "spec.md")), "Antigravity rule missing after all-adapter install.");
 }
 
 function testContextFixture() {

@@ -24,6 +24,7 @@ assert(fs.existsSync(path.join(root, "skill", "commands", "init.md")), "Missing 
 assert(fs.existsSync(path.join(root, "adapters", "codex")), "Missing adapters/codex/");
 assert(fs.existsSync(path.join(root, "adapters", "claude")), "Missing adapters/claude/");
 assert(fs.existsSync(path.join(root, "adapters", "cursor")), "Missing adapters/cursor/");
+assert(fs.existsSync(path.join(root, "adapters", "antigravity")), "Missing adapters/antigravity/");
 assert(fs.existsSync(path.join(root, "docs", "npm.md")), "Missing docs/npm.md");
 
 const skillPath = path.join(root, "skill", "SKILL.md");
@@ -41,6 +42,7 @@ const onboarding = fs.readFileSync(path.join(root, "skill", "onboarding.md"), "u
 const codexAdapter = fs.readFileSync(path.join(root, "adapters", "codex", "AGENTS.template.md"), "utf8");
 const claudeAdapter = fs.readFileSync(path.join(root, "adapters", "claude", "CLAUDE.template.md"), "utf8");
 const cursorAdapter = fs.readFileSync(path.join(root, "adapters", "cursor", "spec.template.mdc"), "utf8");
+const antigravityAdapter = fs.readFileSync(path.join(root, "adapters", "antigravity", "spec.rule.md"), "utf8");
 const docsText = readAll([
   "README.md",
   "docs/codex.md",
@@ -52,6 +54,8 @@ const docsText = readAll([
   "adapters/codex/README.md",
   "adapters/claude/README.md",
   "adapters/cursor/README.md",
+  "docs/antigravity.md",
+  "adapters/antigravity/README.md",
   "adapters/generic/README.md"
 ]);
 const moduleFiles = fs.readdirSync(modulesDir).filter((file) => file.endsWith(".md")).sort();
@@ -147,6 +151,9 @@ assert(cursorAdapter.includes(".spec/router.md"), "Cursor adapter must route thr
 assert(codexAdapter.includes("$spec init"), "Codex adapter must use agent-side init.");
 assert(claudeAdapter.includes("/spec init"), "Claude adapter must use agent-side init.");
 assert(cursorAdapter.includes("/spec init"), "Cursor adapter must use agent-side init.");
+assert(antigravityAdapter.includes(".spec/SKILL.md"), "Antigravity adapter must read the Spec skill.");
+assert(antigravityAdapter.includes(".spec/router.md"), "Antigravity adapter must route through .spec/router.md.");
+assert(antigravityAdapter.includes("activation: always_on"), "Antigravity adapter must declare always-on activation.");
 assert(!claudeAdapter.includes("$spec"), "Claude adapter must not recommend $spec.");
 assert(!cursorAdapter.includes("$spec"), "Cursor adapter must not recommend $spec.");
 assert(!docsText.includes("spec start"), "Docs should not recommend terminal onboarding with spec start.");

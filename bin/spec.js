@@ -137,13 +137,21 @@ function main() {
       return;
     }
 
+    if (mode === "antigravity") {
+      installAntigravityAdapter(targetDir);
+      printAdapterMessage("Antigravity", [".spec/", ".agents/rules/spec.md"], "antigravity");
+      return;
+    }
+
     installGenericAdapter(targetDir);
     installCodexAdapter(targetDir);
     installClaudeAdapter(targetDir);
     installCursorAdapter(targetDir);
+    installAntigravityAdapter(targetDir);
     printAdapterMessage("all supported agents", [
       ".spec/",
       ".agents/skills/spec/",
+      ".agents/rules/spec.md",
       ".claude/skills/spec/",
       ".cursor/rules/spec.mdc",
       "AGENTS.md",
@@ -176,6 +184,9 @@ function parseInstallMode(args) {
   if (flags.has("--cursor")) {
     return "cursor";
   }
+  if (flags.has("--antigravity")) {
+    return "antigravity";
+  }
   if (flags.has("--generic")) {
     return "generic";
   }
@@ -192,6 +203,7 @@ function printHelp() {
   console.log("  spec install --codex     Install Spec for Codex");
   console.log("  spec install --claude    Install Spec for Claude Code");
   console.log("  spec install --cursor    Install Spec for Cursor");
+  console.log("  spec install --antigravity Install Spec for Antigravity");
   console.log("  spec install --all       Install all adapters");
   console.log("  spec check --ci          Check readiness with a failing exit code (for CI)");
   console.log("  spec help                Show help\n");
@@ -215,7 +227,12 @@ function printAdapterMessage(label, created, dialect) {
     console.log("2. Inside the agent, run the matching init command:");
     console.log("   Codex: $spec init");
     console.log("   Claude Code/Cursor: /spec init");
+    console.log("   Antigravity: ask it to initialize Spec (with the Spec rule enabled)");
     console.log("   Generic: spec init");
+    return;
+  }
+  if (dialect === "antigravity") {
+    console.log("2. Inside Antigravity, ask it to initialize Spec with the workspace rule enabled.");
     return;
   }
   console.log(`2. Inside the agent, run: ${dialect} init`);
@@ -279,6 +296,17 @@ function installCursorAdapter(targetDir) {
     "utf8"
   );
   upsertMarkedBlock(path.join(targetDir, "AGENTS.md"), AGENTS_SPEC_BLOCK);
+}
+
+function installAntigravityAdapter(targetDir) {
+  installSpec(targetDir);
+  const rulesDir = path.join(targetDir, ".agents", "rules");
+  ensureDir(rulesDir);
+  fs.writeFileSync(
+    path.join(rulesDir, "spec.md"),
+    fs.readFileSync(path.join(ADAPTERS_DIR, "antigravity", "spec.rule.md"), "utf8"),
+    "utf8"
+  );
 }
 
 function copySkillForAgent(destinationDir) {
