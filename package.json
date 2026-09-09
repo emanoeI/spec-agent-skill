@@ -35,11 +35,13 @@
     "eval:fixtures": "node scripts/validate-eval-fixtures.js",
     "eval:agent": "node scripts/run-agent-eval.js",
     "eval:agent:test": "node scripts/evaluate-agent-output-test.js",
+    "eval:regression": "node scripts/check-skill-regression.js && node scripts/check-skill-regression-test.js",
+    "eval:baseline:update": "node scripts/snapshot-skill-contract.js",
     "distribution:test": "node scripts/distribution-test.js",
     "skill:validate": "node scripts/validate-skill.js && node scripts/validate-skill-test.js",
     "skill:pack": "node scripts/pack-skill.js",
     "skill:pack:test": "node scripts/pack-skill-test.js",
-    "test:all": "npm run skill:validate && npm run skill:pack:test && npm run eval:fixtures && npm run eval:agent:test && node scripts/public-check.js && node scripts/eval-spec.js && node scripts/smoke-test.js && node scripts/pack-check.js && node scripts/distribution-test.js"
+    "test:all": "npm run skill:validate && npm run skill:pack:test && npm run eval:fixtures && npm run eval:agent:test && npm run eval:regression && node scripts/public-check.js && node scripts/eval-spec.js && node scripts/smoke-test.js && node scripts/pack-check.js && node scripts/distribution-test.js"
   },
   "keywords": [
     "ai",

@@ -1,0 +1,87 @@
+{
+  "name": "spec",
+  "commands": [
+    "check",
+    "document",
+    "help",
+    "init",
+    "refine"
+  ],
+  "modules": [
+    "acceptance-criteria",
+    "agent-task-pack",
+    "architecture",
+    "business-rules",
+    "decision-ledger",
+    "domain-research",
+    "first-prompt-audit",
+    "foundation-score",
+    "memory-loop",
+    "mvp-slicer",
+    "product-gap-review",
+    "production-basics",
+    "project-protection",
+    "prompt-compiler",
+    "red-flags",
+    "regression-guard",
+    "risks",
+    "security",
+    "spec-score",
+    "testing",
+    "ux-ui",
+    "validation",
+    "vibecoding-fit",
+    "work-classifier"
+  ],
+  "adapters": [
+    "antigravity",
+    "claude",
+    "codex",
+    "cursor",
+    "generic"
+  ],
+  "workTypes": [
+    "Greenfield",
+    "Feature",
+    "Refactor",
+    "Sensitive integration",
+    "Repair"
+  ],
+  "outputSections": [
+    "Veredito",
+    "Tipo de trabalho",
+    "Pesquisa rápida de domínio",
+    "Falhas/riscos",
+    "Foundation Score",
+    "Impacto no projeto",
+    "Base recomendada",
+    "Escopo para vibecoding",
+    "Regras essenciais",
+    "Prompt gerado",
+    "Testes mínimos",
+    "Rollback / não regressão",
+    "Atualizar memória",
+    "Style"
+  ],
+  "evalCases": [
+    "account-deletion",
+    "discord-oauth",
+    "finance-saas",
+    "greenfield-ecommerce",
+    "my-account-refactor",
+    "payment-integration",
+    "public-listing-scale",
+    "refactor-rewrite-stack",
+    "repair-checkout",
+    "schema-migration",
+    "small-internal-tool",
+    "upload-feature"
+  ],
+  "fixtures": [
+    "feature-public-listing",
+    "greenfield-ecommerce",
+    "refactor-account",
+    "repair-checkout",
+    "sensitive-payment"
+  ]
+}
